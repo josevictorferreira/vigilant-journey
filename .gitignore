@@ -28,3 +28,6 @@
 
 .ash_history
 .ash-history
+
+.env
+.cache

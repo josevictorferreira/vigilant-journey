@@ -1,5 +1,5 @@
 class SavingsController < ApplicationController
-  before_action :set_saving, only: %i[ show update destroy ]
+  before_action :set_saving, only: %i[show update destroy]
 
   # GET /savings
   def index
@@ -39,13 +39,14 @@ class SavingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_saving
-      @saving = Saving.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def saving_params
-      params.require(:saving).permit(:value, :date)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_saving
+    @saving = Saving.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def saving_params
+    params.require(:saving).permit(:value, :date)
+  end
 end
