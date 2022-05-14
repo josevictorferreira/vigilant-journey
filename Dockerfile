@@ -2,7 +2,7 @@ ARG RUBY_VERSION=3.1.2
 
 FROM ruby:${RUBY_VERSION}-alpine AS base
 
-RUN apk add --update tzdata build-base sqlite
+RUN apk add --update tzdata build-base sqlite sqlite-dev
 
 RUN wget -O - https://github.com/jemalloc/jemalloc/releases/download/5.2.1/jemalloc-5.2.1.tar.bz2 | tar -xj && \
     cd jemalloc-5.2.1 && \
