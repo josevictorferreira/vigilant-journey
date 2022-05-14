@@ -1,16 +1,16 @@
 version: '3.9'
 
 services:
-  vigilant-winner:
+  vigilant-journey:
     build: 
       context: .
       dockerfile: Dockerfile
       args:
         RAILS_ENV: development
-    image: vigilant-winner 
-    container_name: vigilant-winner
+    image: vigilant-journey 
+    container_name: vigilant-journey
     depends_on:
-      - vigilant-winner-db
+      - vigilant-journey-db
     ports: 
       - "3000:3000"
     volumes: 
@@ -18,9 +18,6 @@ services:
     stdin_open: true
     tty: true
     environment:
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: postgres
-      POSTGRES_HOST: vigilant-winner-db
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: true
       RAILS_SERVE_STATIC_FILES: true
