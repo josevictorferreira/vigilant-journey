@@ -1,19 +1,16 @@
 class SavingsController < ApplicationController
-  before_action :set_saving, only: %i[show update destroy]
+  before_action :set_saving, only: %i[show update destroy], except: %i[current_month]
 
-  # GET /savings
   def index
     @savings = Saving.all
 
     render json: @savings
   end
 
-  # GET /savings/1
   def show
     render json: @saving
   end
 
-  # POST /savings
   def create
     @saving = Saving.new(saving_params)
 
@@ -24,7 +21,6 @@ class SavingsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /savings/1
   def update
     if @saving.update(saving_params)
       render json: @saving
@@ -33,19 +29,26 @@ class SavingsController < ApplicationController
     end
   end
 
-  # DELETE /savings/1
   def destroy
     @saving.destroy
   end
 
+  def current_month
+    current_time = Time.current
+    start = current_time.beginning_of_month
+    final = current_time.end_of_month
+
+    total = Saving.where(date: start..final).sum(:value)
+
+    render json: { total: }, status: :ok
+  end
+
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_saving
     @saving = Saving.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def saving_params
     params.require(:saving).permit(:value, :date)
   end
