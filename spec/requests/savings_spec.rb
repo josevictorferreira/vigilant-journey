@@ -4,15 +4,23 @@ require 'rails_helper'
 
 RSpec.describe '/savings', type: :request do
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {
+      value: 100.0,
+      date: Time.now.iso8601
+    }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {
+      value: 'value',
+      date: Time.now.iso8601
+    }
   end
 
   let(:valid_headers) do
-    {}
+    {
+      'Content-Type': 'application/json'
+    }
   end
 
   describe 'GET /index' do
@@ -25,7 +33,8 @@ RSpec.describe '/savings', type: :request do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      Saving.create! valid_attributes get saving_url(saving), as: :json
+      saving = Saving.create! valid_attributes
+      get saving_url(saving), as: :json
       expect(response).to be_successful
     end
   end
@@ -65,7 +74,9 @@ RSpec.describe '/savings', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        {
+          value: 300.0
+        }
       end
 
       it 'updates the requested saving' do
@@ -73,7 +84,7 @@ RSpec.describe '/savings', type: :request do
         patch saving_url(saving),
               params: { saving: new_attributes }, headers: valid_headers, as: :json
         saving.reload
-        skip('Add assertions for updated state')
+        expect(saving.value).to eq(300.0)
       end
 
       it 'renders a JSON response with the saving' do

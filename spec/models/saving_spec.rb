@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Saving, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { is_expected.to validate_presence_of(:value) }
+  it { is_expected.to validate_presence_of(:date) }
+  it { is_expected.to validate_numericality_of(:value) }
 end
