@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class SavingsController < ApplicationController
-  before_action :set_saving, only: %i[show update destroy], except: %i[current_month]
+  before_action :set_saving, only: %i[show update destroy]
 
   def index
     @savings = Saving.all
@@ -33,12 +35,12 @@ class SavingsController < ApplicationController
     @saving.destroy
   end
 
-  def current_month
+  def totals_month
     current_time = Time.current
     start = current_time.beginning_of_month
     final = current_time.end_of_month
 
-    total = Saving.where(date: start..final).sum(:value)
+    total = Saving.where(date: start..final).sum(:value).to_f
 
     render json: { total: }, status: :ok
   end

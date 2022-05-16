@@ -3,5 +3,5 @@
 Rails.application.routes.draw do
   resources :savings
 
-  get '/savings/current_month', to: 'savings#current_month'
+  get '/savings/totals/month', to: 'savings#totals_month'
 end
