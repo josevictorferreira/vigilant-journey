@@ -36,13 +36,7 @@ class SavingsController < ApplicationController
   end
 
   def totals_month
-    current_time = Time.current
-    start = current_time.beginning_of_month
-    final = current_time.end_of_month
-
-    total = Saving.where(date: start..final).sum(:value).to_f
-
-    render json: { total: }, status: :ok
+    render json: { total: Saving.current_month_total }, status: :ok
   end
 
   private

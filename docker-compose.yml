@@ -1,5 +1,9 @@
 version: '3.9'
 
+networks:
+  vigilant-net:
+    driver: bridge
+
 services:
   vigilant-journey:
     build: 
@@ -18,9 +22,30 @@ services:
     stdin_open: true
     tty: true
     environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres 
+      POSTGRES_HOST: vigilant-journey-db
+      POSTGRES_PORT: 5432
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: true
-      RAILS_SERVE_STATIC_FILES: true
+    networks:
+      - vigilant-net
+  vigilant-journey-db:
+    image: postgres:14
+    container_name: vigilant-journey-db
+    environment:
+      POSTGRES_DB: vigilant_journey_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5440:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vigilant-net
 
 volumes:
   db_data:
